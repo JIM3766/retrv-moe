@@ -1,42 +1,23 @@
 # Retrv-MoE Evaluation Artifact
 
-This minimal artifact contains the evaluation entry point for the KDD 2026 paper "Retrv-MoE: Scaling Unified Multimodal Retrieval with Sparse Mixture-of-Experts".
+This repository provides the official evaluation/inference artifact for the KDD 2026 paper:
 
-## Files
+**Retrv-MoE: Scaling Unified Multimodal Retrieval with Sparse Mixture-of-Experts**
 
-```text
-eval/eval_mbeir_moe_lora_binary_alltasks.py
-scripts/eval/eval_mbeir_moe_lora_binary_alltasks.sh
-checkpoints/README.md
-```
+## Overview
 
-## Important
+Retrv-MoE is a unified multimodal retriever based on sparse Mixture-of-Experts. This minimal artifact release contains the evaluation entry point, model wrapper, dataset loader, data collator, and scripts needed to run evaluation with a prepared checkpoint.
 
-The two evaluation files are not fully standalone. The Python script imports project modules such as:
+Training code is not included in this minimal artifact release.
+
+## Repository Structure
 
 ```text
-models.configuration_lora_moe
-models.modelling_lora_moe
-collators.mbeir_eval
-dataset.datasets_mbeir_binary_v2
-```
-
-Please include those dependency files/directories from the original project as well.
-
-## Run
-
-```bash
-bash scripts/eval/eval_mbeir_moe_lora_binary_alltasks.sh
-```
-
-You can override paths without editing the script:
-
-```bash
-MODEL_ID=/path/to/retrv_moe_lora \
-ORIGINAL_MODEL_ID=/path/to/base_model \
-IMAGE_PATH_PREFIX=/path/to/data_binary \
-GLOBAL_POOL=/path/to/mbeir_union_test_cand_pool_bin.jsonl \
-INSTRUCTIONS=/path/to/query_instructions.tsv \
-TASK_CONFIG=./eval/eval_tasks.json \
-bash scripts/eval/eval_mbeir_moe_lora_binary_alltasks.sh
-```
+.
+├── checkpoints/
+├── collators/
+├── dataset/
+├── eval/
+├── models/
+├── scripts/eval/
+└── README.md

@@ -1,4 +1,3 @@
-````
 # Retrv-MoE Evaluation Artifact
 
 This repository provides the official evaluation/inference artifact for the KDD 2026 paper:

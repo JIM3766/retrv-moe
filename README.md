@@ -1,40 +1,42 @@
-# retrv-moe
-Official repository for "Retrv-MoE: Scaling Unified Multimodal Retrieval with Sparse Mixture-of-Experts"
+# Retrv-MoE Evaluation Artifact
 
+This minimal artifact contains the evaluation entry point for the KDD 2026 paper "Retrv-MoE: Scaling Unified Multimodal Retrieval with Sparse Mixture-of-Experts".
 
-# Checkpoints
-
-Do not commit large checkpoint files to GitHub.
-
-This evaluation script expects two model paths:
-
-- `ORIGINAL_MODEL_ID`: the base model directory used by `AutoProcessor.from_pretrained(...)` and `Qwen2VLForConditionalGeneration.from_pretrained(...)`.
-- `MODEL_ID`: the Retrv-MoE LoRA/MoE checkpoint directory used by `LoraMoeConfig.from_pretrained(...)` and `moe_lora_weights.bin`.
-
-For the original server run, the intended MoE checkpoint path was:
+## Files
 
 ```text
-/njfs/train-ali/tongxu/weibo_X2X/checkpoints/qwen2-vl-2b_mbeir_moe_lora_stage3_2e4_4gpu_1epoch_train_val_bestv3_2temp_32bs_4ex_top2_128Rank_multigpu
+eval/eval_mbeir_moe_lora_binary_alltasks.py
+scripts/eval/eval_mbeir_moe_lora_binary_alltasks.sh
+checkpoints/README.md
 ```
 
-The MoE checkpoint directory should contain at least:
+## Important
+
+The two evaluation files are not fully standalone. The Python script imports project modules such as:
 
 ```text
-config.json or the MoE config files required by LoraMoeConfig.from_pretrained
-moe_lora_weights.bin
+models.configuration_lora_moe
+models.modelling_lora_moe
+collators.mbeir_eval
+dataset.datasets_mbeir_binary_v2
 ```
 
-Recommended public release layout:
+Please include those dependency files/directories from the original project as well.
 
-```text
-checkpoints/
-├── README.md
-├── base_model/
-└── retrv_moe_lora/
-    ├── config.json
-    └── moe_lora_weights.bin
+## Run
+
+```bash
+bash scripts/eval/eval_mbeir_moe_lora_binary_alltasks.sh
 ```
 
-If the base model is already publicly available elsewhere, do not re-upload it. Provide the public URL and license information in the repository README, and set `ORIGINAL_MODEL_ID` to the downloaded local path when running evaluation.
+You can override paths without editing the script:
 
-If the MoE LoRA checkpoint is small enough and you are allowed to release it, upload it to Zenodo or Hugging Face and link it in the GitHub README. If it is too large or cannot be released, leave only this README and describe the limitation clearly.
+```bash
+MODEL_ID=/path/to/retrv_moe_lora \
+ORIGINAL_MODEL_ID=/path/to/base_model \
+IMAGE_PATH_PREFIX=/path/to/data_binary \
+GLOBAL_POOL=/path/to/mbeir_union_test_cand_pool_bin.jsonl \
+INSTRUCTIONS=/path/to/query_instructions.tsv \
+TASK_CONFIG=./eval/eval_tasks.json \
+bash scripts/eval/eval_mbeir_moe_lora_binary_alltasks.sh
+```

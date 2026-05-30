@@ -1,3 +1,4 @@
+````
 # Retrv-MoE Evaluation Artifact
 
 This repository provides the official evaluation/inference artifact for the KDD 2026 paper:
@@ -21,3 +22,27 @@ Training code is not included in this minimal artifact release.
 ├── models/
 ├── scripts/eval/
 └── README.md
+````
+
+## Model Checkpoint
+
+The Retrv-MoE checkpoint is available on ModelScope:
+
+```text
+https://www.modelscope.cn/models/JIM3766/retrv-moe-2b-4ex-top2
+```
+
+After downloading the checkpoint, set:
+
+```bash
+MODEL_ID=/path/to/retrv-moe-2b-4ex-top2
+```
+
+The base model should be prepared separately and set as:
+
+```bash
+ORIGINAL_MODEL_ID=/path/to/base/model
+```
+
+[1]: https://kdd2026.kdd.org/call-for-artifact-badging/ "Call for Artifact Badging – KDD 2026"
+[2]: https://docs.github.com/repositories/archiving-a-github-repository/referencing-and-citing-content "Referencing and citing content - GitHub Docs"
